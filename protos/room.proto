@@ -1,0 +1,28 @@
+// protos/room.proto
+
+syntax = "proto3";
+
+package room;
+
+service RoomService {
+  rpc GetRoom (RoomRequest) returns (RoomResponse);
+  rpc ListRooms (Empty) returns (RoomListResponse);
+}
+
+message RoomRequest {
+  string id = 1;
+}
+
+message RoomResponse {
+  string id = 1;
+  string name = 2;
+  string type = 3;
+  int32 capacity = 4;
+  bool available = 5;
+}
+
+message RoomListResponse {
+  repeated RoomResponse rooms = 1;
+}
+
+message Empty {}

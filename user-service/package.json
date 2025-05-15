@@ -1,0 +1,13 @@
+{
+  "name": "user-service",
+  "version": "1.0.0",
+  "description": "Microservice for user authentication",
+  "main": "user.js",
+  "scripts": {
+    "start": "node user.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "user-service": "file:"
+  }
+}

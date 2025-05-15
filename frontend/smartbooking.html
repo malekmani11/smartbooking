@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SmartBooking Frontend</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #333; }
+    form { margin-bottom: 30px; padding: 10px; background: #fff; border-radius: 8px; box-shadow: 0 0 5px rgba(0,0,0,0.1); }
+    input, select { padding: 8px; margin: 5px; width: 200px; }
+    button { padding: 8px 16px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+    button:hover { background-color: #0056b3; }
+    .response { margin-top: 10px; padding: 10px; background: #e6f7ff; border: 1px solid #91d5ff; border-radius: 5px; }
+  </style>
+</head>
+<body>
+  <h1>SmartBooking Mini Frontend</h1>
+
+  <form id="bookingForm">
+    <h2>📅 Réserver une chambre</h2>
+    <input type="text" id="userId" placeholder="ID Utilisateur" required />
+    <input type="text" id="roomId" placeholder="ID Chambre" required />
+    <input type="date" id="date" required />
+    <button type="submit">Réserver</button>
+    <div class="response" id="bookingResponse" id="chambresResultat"></div>
+  </form>
+
+  <form id="getRooms">
+    <h2>🏨 Afficher les chambres</h2>
+    <button type="submit" id="voirChambresBtn" >Voir chambres</button>
+    <div class="response" id="roomsResponse"></div>
+  </form>
+
+  <script>
+    document.getElementById("bookingForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const userId = document.getElementById("userId").value;
+      const roomId = document.getElementById("roomId").value;
+      const date = document.getElementById("date").value;
+
+      const res = await fetch("http://localhost:3000/api/bookings", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId, roomId, date })
+      });
+
+      const data = await res.json();
+      document.getElementById("bookingResponse").innerText = JSON.stringify(data, null, 2);
+    });
+
+    document.getElementById("getRooms").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const res = await fetch("http://localhost:3000/api/rooms");
+      const data = await res.json();
+      document.getElementById("roomsResponse").innerText = JSON.stringify(data, null, 2);
+    });
+  </script>
+</body>
+</html>
